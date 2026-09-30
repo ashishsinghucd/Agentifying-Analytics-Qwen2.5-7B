@@ -1,6 +1,6 @@
 line-length = 135
 target-version = "py310"
-include = ["agentic/**/*.py", "tests/**/*.py", "evaluations/eval_agent.py"]
+include = ["agentic/**/*.py", "tests/**/*.py", "evaluations/eval_agent.py", "scripts/make_readme_assets.py", "scripts/capture_ui_screenshot.py", "scripts/make_demo_gif.py"]
 
 [lint]
 select = ["E", "F", "I", "B", "UP"]

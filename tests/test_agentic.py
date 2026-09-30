@@ -155,3 +155,13 @@ def test_llm_planner_loop_recovers_from_bad_output(settings, monkeypatch):
     assert r.planner == "llm" and r.answer == "Conveyor had the most downtime."
     assert r.evidence["verification"][0]["status"] == "passed"
     assert any('"planner_error"' in line for line in open(r.trace_path, encoding="utf-8"))
+
+
+def test_ui_handler_returns_answer_chart_and_evidence(settings, monkeypatch):
+    """The Gradio callback works without launching a server (gradio itself is optional)."""
+    from agentic import ui
+
+    monkeypatch.setattr(ui, "get_agent", lambda: AnalyticsAgent(settings))
+    answer, chart, verification, sql, trace = ui.run("Which equipment had the most downtime in 2025?", None)
+    assert "highest downtime" in answer and chart.endswith(".png")
+    assert "PASSED" in verification and "governed" in sql and "query_metric" in trace

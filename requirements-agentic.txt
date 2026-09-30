@@ -12,3 +12,5 @@ pytest>=8.0
 ruff>=0.5
 # Real chart reader (VLM_BACKEND=qwen, GPU with 16GB+ VRAM) also needs the repo's model stack:
 # torch transformers>=4.45 peft>=0.12 accelerate qwen-vl-utils pillow
+# Optional web UI (python -m agentic.ui): gradio>=4.0
+# Optional README visuals (screenshot, demo GIF): playwright pillow, then `playwright install chromium`

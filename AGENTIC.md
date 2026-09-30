@@ -19,7 +19,7 @@ numbers for the same KPI. This project takes the opposite approach:
 | **Charts are verified** | The fine-tuned ChartQA model reads the rendered chart back; values must match the SQL result within 5%. |
 | **Dashboards can be reconciled** | Upload a screenshot of an existing dashboard or report figure; the agent reads it with the ChartQA model and flags it if it disagrees with the governed numbers. |
 | **Secure by default** | Read-only DuckDB connection, sqlglot guard (single SELECT, allow-listed tables, no file/network functions), parameter binding, row caps, no arbitrary file paths for tools. |
-| **Tested and gated in CI** | 22 pytest tests, ruff, golden-question evaluation with an accuracy threshold, on every push. |
+| **Tested and gated in CI** | 23 pytest tests, ruff, golden-question evaluation with an accuracy threshold, on every push. |
 
 ## Architecture
 

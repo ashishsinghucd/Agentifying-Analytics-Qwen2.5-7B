@@ -1,0 +1,5 @@
+
+# Agentic analytics layer
+agentic/data/*.duckdb
+outputs/agent_runs/
+outputs/agent_eval.json

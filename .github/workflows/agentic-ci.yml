@@ -2,8 +2,8 @@ name: agentic-ci
 
 on:
   push:
-    branches: [main]
-    paths: ["agentic/**", "tests/**", "evaluations/**", "requirements-agentic.txt", ".github/workflows/agentic-ci.yml"]
+    branches: ["**"]
+    paths: ["agentic/**", "tests/**", "evaluations/**", "scripts/*.py", "requirements-agentic.txt", ".github/workflows/agentic-ci.yml"]
   pull_request:
 
 permissions:
