@@ -1,0 +1,14 @@
+# Agentic analytics layer (CPU-only; CI installs just this file)
+duckdb>=1.1
+sqlglot>=25.0
+pyyaml>=6.0
+numpy>=1.26
+matplotlib>=3.8
+httpx>=0.27
+fastapi>=0.110
+uvicorn>=0.29
+python-multipart>=0.0.9
+pytest>=8.0
+ruff>=0.5
+# Real chart reader (VLM_BACKEND=qwen, GPU with 16GB+ VRAM) also needs the repo's model stack:
+# torch transformers>=4.45 peft>=0.12 accelerate qwen-vl-utils pillow

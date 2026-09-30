@@ -1,0 +1,94 @@
+# Semantic model: ONE governed definition of each business metric, readable by
+# both humans (exported to Power BI DAX measures) and AI agents (compiled to SQL).
+# Agents never invent aggregation logic; they pick a metric + dimensions from here.
+version: 1
+
+time_grains: [day, week, month, quarter, year]
+
+models:
+  production:
+    table: fact_production_daily
+    time_column: date
+    joins:
+      - {table: dim_site, alias: s, condition: "f.site_id = s.site_id"}
+    dimensions:
+      site:   {expr: s.site_name, description: "Operating site", synonyms: [site, mine, plant, location]}
+      region: {expr: s.region,    description: "Geographic region", synonyms: [region, area]}
+    metrics:
+      pellets_produced_t:
+        label: Pellets produced
+        description: Total iron-ore pellets produced.
+        unit: t
+        agg: sum
+        column: pellets_produced_t
+        synonyms: [pellets, pellet production, production, output]
+      ore_hoisted_t:
+        label: Ore hoisted
+        description: Total crude ore hoisted from the mine.
+        unit: t
+        agg: sum
+        column: ore_hoisted_t
+        synonyms: [ore, hoisted, crude ore, mined]
+      energy_mwh:
+        label: Energy use
+        description: Total electricity and fuel energy consumed.
+        unit: MWh
+        agg: sum
+        column: energy_mwh
+        synonyms: [energy, electricity, power consumption]
+      energy_intensity_kwh_per_t:
+        label: Energy intensity
+        description: Energy used per tonne of pellets produced.
+        unit: kWh/t
+        agg: ratio
+        numerator: energy_mwh
+        denominator: pellets_produced_t
+        scale: 1000
+        synonyms: [energy intensity, energy per tonne, kwh per tonne, efficiency]
+      co2_intensity_kg_per_t:
+        label: CO2 intensity
+        description: CO2 emitted per tonne of pellets produced.
+        unit: kg/t
+        agg: ratio
+        numerator: co2_t
+        denominator: pellets_produced_t
+        scale: 1000
+        synonyms: [co2 intensity, emissions intensity, co2 per tonne, carbon intensity]
+      co2_t:
+        label: CO2 emissions
+        description: Total CO2 emitted.
+        unit: t
+        agg: sum
+        column: co2_t
+        synonyms: [co2, emissions, carbon]
+      avg_fe_grade_pct:
+        label: Average Fe grade
+        description: Average iron content of the product.
+        unit: "%"
+        agg: avg
+        column: fe_grade_pct
+        synonyms: [fe grade, iron grade, grade, quality]
+
+  downtime:
+    table: fact_downtime
+    time_column: date
+    joins:
+      - {table: dim_site, alias: s, condition: "f.site_id = s.site_id"}
+    dimensions:
+      site:      {expr: s.site_name,  description: "Operating site", synonyms: [site, mine, plant]}
+      equipment: {expr: f.equipment,  description: "Equipment type", synonyms: [equipment, machine, asset]}
+      cause:     {expr: f.cause,      description: "Stop cause", synonyms: [cause, reason]}
+    metrics:
+      downtime_hours:
+        label: Downtime
+        description: Total unplanned and planned equipment downtime.
+        unit: h
+        agg: sum
+        column: downtime_h
+        synonyms: [downtime, stoppage, stop time, outage]
+      downtime_events:
+        label: Downtime events
+        description: Number of recorded stops.
+        unit: events
+        agg: count
+        synonyms: [stops, events, breakdowns, number of stops]
