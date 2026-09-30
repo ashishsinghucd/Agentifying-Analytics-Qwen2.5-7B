@@ -1,4 +1,4 @@
-# AskAnything Analytics Agent
+# Agentifying Analytics Qwen2.5-7B (An open source platform)
 
 **An agentic analytics layer on top of a fine-tuned chart-understanding model.** Ask a business question in plain language and get a governed number, a chart, and a check that the chart matches the data. You can also upload a dashboard screenshot and have it checked against the warehouse.
 
